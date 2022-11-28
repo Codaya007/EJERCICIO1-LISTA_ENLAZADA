@@ -103,6 +103,7 @@ public class frmSimulacion extends javax.swing.JFrame implements Runnable {
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
         new frmPersona().setVisible(true);
         hilo.stop();
     }//GEN-LAST:event_btnVolverActionPerformed
