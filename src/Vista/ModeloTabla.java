@@ -26,13 +26,13 @@ public class ModeloTabla extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 6;
     }
 
     @Override
     public int getRowCount() {
-        // System.out.println("Size" + personas.getUltimaPosicion());
-        return personas.getUltimaPosicion();
+        // System.out.println("Size" + personas.getUltimaPosicionOcupada());
+        return personas.getUltimaPosicionOcupada();
     }
 
     @Override
@@ -49,6 +49,8 @@ public class ModeloTabla extends AbstractTableModel {
                 return "Edad";
             case 4:
                 return "Categoría";
+            case 5:
+                return "Medicinas";
             default:
                 return null;
         }
@@ -77,6 +79,10 @@ public class ModeloTabla extends AbstractTableModel {
                 return (persona != null && persona.getCategoria() != null)
                         ? persona.getCategoria().getNombre()
                         : "NO HAY CATEGORÍA";
+            case 5:
+                return (persona != null && persona.getCategoria() != null)
+                        ? persona.getCategoria().getMedicinas()
+                        : "NO HAY TRATAMIENTO DEFINIDO";
             default:
                 return null;
         }

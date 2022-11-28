@@ -54,7 +54,7 @@ public class ListaEnlazada<E> {
         size++;
     }
 
-    public int getUltimaPosicion() {
+    public int getUltimaPosicionOcupada() {
         int posicion = 0;
         
         if (!estaVacia()) {
@@ -131,8 +131,7 @@ public class ListaEnlazada<E> {
     public E eliminarDato(Integer pos) throws PosicionException, ListaNullException {
         E dato = null;
         if (!estaVacia()) {
-            System.out.println("pos: " + pos + " size: " + size + "ultima: " + getUltimaPosicion() );
-            System.out.println(cabecera);
+            System.out.println("Pocisión: " + pos + " Size: " + size + " Última: " + getUltimaPosicionOcupada() );
             if (pos >= 0 && pos < size) {
                 if (pos == 0) {
                     dato = cabecera.getDato();

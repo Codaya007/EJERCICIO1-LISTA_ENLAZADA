@@ -24,7 +24,7 @@ public class frmPersona extends javax.swing.JFrame {
         if (ctrlPersonas != null) {
             modeloTabla.setPersonas(ctrlPersonas.getListaPersona());
             tblPersonas.setModel(modeloTabla);
-            // tblPersonas.updateUI();
+            tblPersonas.updateUI();
             jScrollPane1.setVisible(true);
         } else {
             jScrollPane1.setVisible(false);
@@ -241,8 +241,9 @@ public class frmPersona extends javax.swing.JFrame {
 
     private void btnSimularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimularActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-        new frmSimulacion(ctrlPersonas).setVisible(true);
+        this.setVisible(false);
+        System.out.println("Debería iniciarse la simulación aquí...");
+        new frmSimulacion().setVisible(true);
     }//GEN-LAST:event_btnSimularActionPerformed
 
     /**

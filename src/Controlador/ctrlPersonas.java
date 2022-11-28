@@ -23,10 +23,10 @@ public class ctrlPersonas {
     }
 
     public Boolean setListaPersona(Persona persona) throws PosicionException {
-        if (listaPersonas.getSize() == listaPersonas.getUltimaPosicion()) {
+        if (listaPersonas.getSize() == listaPersonas.getUltimaPosicionOcupada()) {
             return false;
         }
-        this.listaPersonas.insertarPosicion(persona, listaPersonas.getUltimaPosicion());
+        this.listaPersonas.insertarPosicion(persona, listaPersonas.getUltimaPosicionOcupada());
 
         return true;
     }
@@ -37,7 +37,7 @@ public class ctrlPersonas {
 
     public void guardar() throws IOException, ListaNullException, PosicionException {
         Gson json = new Gson();
-        Persona[] personas = new Persona[listaPersonas.getUltimaPosicion()];
+        Persona[] personas = new Persona[listaPersonas.getUltimaPosicionOcupada()];
         for (int i = 0; i < personas.length; i++) {
             personas[i] = listaPersonas.obtener(i);
         }

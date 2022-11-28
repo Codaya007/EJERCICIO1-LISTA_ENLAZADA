@@ -1,7 +1,10 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package Vista;
 
 import Controlador.ctrlPersonas;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -9,38 +12,32 @@ import javax.swing.table.DefaultTableModel;
  */
 public class frmSimulacion extends javax.swing.JFrame implements Runnable {
 
-    ctrlPersonas ctrlPersonas;
+    ctrlPersonas ctrlPersonas = new ctrlPersonas();
     ModeloTabla modeloTabla = new ModeloTabla();
+    Thread hilo;
 
     private void cargarTabla() {
         if (ctrlPersonas != null) {
-        // ModeloTabla modeloTabla = new ModeloTabla();
             modeloTabla.setPersonas(ctrlPersonas.getListaPersona());
-            tblPersonasSimulacion.setModel(new DefaultTableModel());
-            tblPersonasSimulacion.setModel(modeloTabla);
-            tblPersonasSimulacion.updateUI();
+            tblSimulacion.setModel(modeloTabla);
+            tblSimulacion.updateUI();
             jScrollPane1.setVisible(true);
         } else {
             jScrollPane1.setVisible(false);
         }
     }
 
-    public frmSimulacion(ctrlPersonas ctrlPersonas) {
-        this.ctrlPersonas = ctrlPersonas;
-
-        initComponents();
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
-        cargarTabla();
-        run();
-    }
-
+    /**
+     * Creates new form frmSimulacion
+     */
     public frmSimulacion() {
-        ctrlPersonas = new ctrlPersonas();
         initComponents();
-        this.setLocationRelativeTo(null);
+        ctrlPersonas.cargar();
         cargarTabla();
-        run();
+        this.setLocationRelativeTo(null);
+
+        hilo = new Thread(this);
+        hilo.start();
     }
 
     /**
@@ -53,12 +50,12 @@ public class frmSimulacion extends javax.swing.JFrame implements Runnable {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblPersonasSimulacion = new javax.swing.JTable();
+        tblSimulacion = new javax.swing.JTable();
+        btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Simulación");
 
-        tblPersonasSimulacion.setModel(new javax.swing.table.DefaultTableModel(
+        tblSimulacion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -69,27 +66,46 @@ public class frmSimulacion extends javax.swing.JFrame implements Runnable {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblPersonasSimulacion);
+        jScrollPane1.setViewportView(tblSimulacion);
+
+        btnVolver.setText("Volver");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 685, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 782, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(280, 280, 280)
+                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(btnVolver)
+                .addGap(18, 18, 18))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        // TODO add your handling code here:
+        new frmPersona().setVisible(true);
+        hilo.stop();
+    }//GEN-LAST:event_btnVolverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -117,7 +133,6 @@ public class frmSimulacion extends javax.swing.JFrame implements Runnable {
             java.util.logging.Logger.getLogger(frmSimulacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -128,24 +143,24 @@ public class frmSimulacion extends javax.swing.JFrame implements Runnable {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton btnVolver;
     private javax.swing.JScrollPane jScrollPane1;
-    public javax.swing.JTable tblPersonasSimulacion;
+    public javax.swing.JTable tblSimulacion;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void run() {
-        while (ctrlPersonas.getListaPersona().getUltimaPosicion() != 0) {
-            try {
-                Thread hilo =  new Thread();
-                hilo.start();
-                hilo.sleep(2000);
-                ctrlPersonas.getListaPersona().eliminarDato(ctrlPersonas.getListaPersona().getUltimaPosicion() - 1);
+        try {
+            while (ctrlPersonas.getListaPersona().getUltimaPosicionOcupada() > 0) {
+                System.out.println("Iterando hilo: " + ctrlPersonas.getListaPersona().getUltimaPosicionOcupada());
+                Thread.sleep(1500);
+                ctrlPersonas
+                        .getListaPersona()
+                        .eliminarDato(0);
                 cargarTabla();
-            } catch (InterruptedException e) {
-                System.out.println("Error en hilo: " + e);
-            } catch (Exception ex) {
-                System.out.println("Error en hilo: " + ex);
             }
+        } catch (Exception ex) {
+            System.out.println("Error al eliminar dato: " + ex);
         }
     }
 }

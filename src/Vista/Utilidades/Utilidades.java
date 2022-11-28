@@ -18,30 +18,30 @@ import javax.swing.JComboBox;
  * @author vivi
  */
 public class Utilidades {
-
+    
     public static Boolean anadirCategoria(ListaEnlazada<Categoria> categorias, Persona p) throws ListaNullException, PosicionException {
-        for (int i = 0; i <= categorias.getUltimaPosicion(); i++) {
+        for (int i = 0; i <= categorias.getUltimaPosicionOcupada(); i++) {
             Categoria category = categorias.obtener(i);
-            System.out.println(i + " - " + p.getNombres() + " pertenece a " + category.getNombre()+ ": " + category.perteneceACategoria(p));
+            System.out.println(i + " - " + p.getNombres() + " pertenece a " + category.getNombre() + ": " + category.perteneceACategoria(p));
             
             if (category != null && category.perteneceACategoria(p)) {
                 p.setCategory(category);
                 return true;
             }
         }
-
+        
         return false;
     }
-
+    
     public static JComboBox cargarComboGenero(JComboBox cbx) {
         cbx.removeAllItems();
         for (Genero genero : Genero.values()) {
             cbx.addItem(genero);
         }
-
+        
         return cbx;
     }
-
+    
     public static void cargarCombosFecha(JComboBox dia, JComboBox mes, JComboBox anio) {
         dia.removeAllItems();
         mes.removeAllItems();
@@ -63,7 +63,7 @@ public class Utilidades {
             anio.addItem(i);
         }
     }
-
+    
     public static ListaEnlazada<Categoria> inicializarCategorias() {
         ListaEnlazada<Categoria> categorias = new ListaEnlazada<>();
 
@@ -79,24 +79,27 @@ public class Utilidades {
         joven.setNombre("Joven");
         joven.setMinEdad(18);
         joven.setMaxEdad(26);
-        joven.setMedicinas("Para niños menores a 5 años, no usar medicinas a menos de ser necesario. En niños mayores se puede usar ibuprofeno o paracetamol en pequeñas cantidades para aliviar los síntomas.");
+        joven.setMedicinas("Los jóvenes son más resistentes, por lo que no suelen necesitar medicamentos, sin embargo, deben guardar reposo.");
         // 3. Adulto
         Categoria adulto = new Categoria();
         adulto.setNombre("Adulto");
         adulto.setMinEdad(27);
         adulto.setMaxEdad(59);
+        adulto.setMedicinas("Guardar reposo y no exponerse al frío. Tomar ibuprofeno cada 8 horas para aliviar los síntomas.");
+
         // 4. Tercera Edad
         Categoria tercera_edad = new Categoria();
         tercera_edad.setNombre("Tercera Edad");
         tercera_edad.setMinEdad(60);
         tercera_edad.setMaxEdad(125);
+        tercera_edad.setMedicinas("Las personas de tercera edad son más vulnerables a las enfermedades, para los malestares se recomienda un tratamiento analgésico y antipirético. para la tos seca irritativa, antitusígenos; para la tos seca productiva, mucolíticos; para la tos productiva que cuesta arrancar, expectorantes.");
 
         // Añado las categorias creadas
         categorias.insertarCabecera(nino);
         categorias.insertarCabecera(joven);
         categorias.insertarCabecera(adulto);
         categorias.insertarCabecera(tercera_edad);
-
+        
         return categorias;
     }
 }
